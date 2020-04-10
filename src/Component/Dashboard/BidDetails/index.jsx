@@ -19,7 +19,7 @@ import { baseUrl } from "./../../../config.js";
 class index extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { 
       toggle: true,
       scrollTop: 0,
       token: "",
@@ -53,7 +53,7 @@ class index extends Component {
     // this.resultsDiv = React.createRef();
   }
   gotoServiceProviderProfile = () => {
-    this.props.history.push(`/serviceProvider/${this.state.spId}`);
+    this.props.history.push(`/serviceProvider/${this.state.userId}`);
   };
   goBack = e => {
     this.props.history.push("/project_details/" + this.state.projectId);
@@ -111,6 +111,7 @@ class index extends Component {
       })
       .then(
         responseData => {
+
           if (!responseData.success) {
             // console.log(responseData.error.message)
             this.setState({
@@ -276,6 +277,7 @@ class index extends Component {
     });
 
     let id = this.state.bidId;
+    let UserID=''
     fetch(
       `${baseUrl}api/services/app/BidAppservice/GetBidDetailById?BidId=` + id,
       {
@@ -289,6 +291,10 @@ class index extends Component {
       //  new
       .then(res => res.json())
       .then(json => {
+        console.log("bid details bud",json)
+        UserID= json.result.project.projectBids[this.props.match.params.key].serviceProviderId
+        console.log("bid details id",UserID)
+        this.setState({userId: UserID})
         if (json.success) {
           let result = json.result;
           console.log("bid result", result);

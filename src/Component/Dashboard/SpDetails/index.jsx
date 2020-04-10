@@ -25,132 +25,287 @@ class index extends Component {
 
     // this.resultsDiv = React.createRef();
   }
-  //   componentDidMount() {
-  //     fetch(
-  //       `${baseUrl}api/services/app/Project/GetActiveProjectBySpId?SpId=` +
-  //         this.state.userId,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: "Bearer " + this.state.token
-  //         }
-  //       }
-  //     )
-  //       .then(res => res.json())
-  //       .then(json => {
-  //         if (json.success) {
-  //           console.log(json.result);
+    // componentDidMount() {
+    //   fetch(
+    //     `${baseUrl}api/services/app/Project/GetActiveProjectBySpId?SpId=` +
+    //       this.state.userId,
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: "Bearer " + this.state.token
+    //       }
+    //     }
+    //   )
+    //     .then(res => res.json())
+    //     .then(json => {
+    //       if (json.success) {
+    //         console.log(json.result);
 
-  //           let result = json.result.map(function(key) {
-  //             // kh code start
-  //             var d = new Date();
-  //             var s1 = key.creationTime;
-  //             var s2 = s1.slice(11, 19);
-  //             var s3 = s2.slice(0, 2);
-  //             var diff = d.getTimezoneOffset() / 60;
-  //             var t = "";
-  //             var a = parseInt(s3) + parseInt(diff) * -1;
-  //             if (a < 10) {
-  //               t = "0" + a;
-  //             } else {
-  //               t = a;
-  //             }
-  //             var j = s1.slice(0, 11);
-  //             var k = s1.slice(13, 25);
-  //             var nT = j + t + k;
-  //             // kh code end
-  //             const dateToFormat = new Date(key.creationTime);
+    //         let result = json.result.map(function(key) {
+    //           // kh code start
+    //           var d = new Date();
+    //           var s1 = key.creationTime;
+    //           var s2 = s1.slice(11, 19);
+    //           var s3 = s2.slice(0, 2);
+    //           var diff = d.getTimezoneOffset() / 60;
+    //           var t = "";
+    //           var a = parseInt(s3) + parseInt(diff) * -1;
+    //           if (a < 10) {
+    //             t = "0" + a;
+    //           } else {
+    //             t = a;
+    //           }
+    //           var j = s1.slice(0, 11);
+    //           var k = s1.slice(13, 25);
+    //           var nT = j + t + k;
+    //           // kh code end
+    //           const dateToFormat = new Date(key.creationTime);
 
-  //             return (
-  //               <div key={key.id} className="col-md-12 sp-profile-type-name-main">
-  //                 <div className="col-md-12 pt-5">
-  //                   <p className="sp-profile-name-type-p-tag text-uppercase">
-  //                     {key.title}
-  //                   </p>
-  //                 </div>
-  //                 <div className="col-md-12 row">
-  //                   <div className="d-flex justify-content-center pl-3">
-  //                     <fieldset className="rating">
-  //                       <input type="radio" id="star5" name="rating" value="5" />
-  //                       <label
-  //                         className="full"
-  //                         for="star5"
-  //                         title="Awesome - 5 stars"
-  //                       ></label>
-  //                       <input
-  //                         type="radio"
-  //                         id="star4half"
-  //                         name="rating"
-  //                         value="4 and a half"
-  //                       />
-  //                       <label
-  //                         className="half"
-  //                         for="star4half"
-  //                         title="Pretty good - 4.5 stars"
-  //                       ></label>
-  //                       <input type="radio" id="star4" name="rating" value="4" />
-  //                       <label
-  //                         className="full"
-  //                         for="star4"
-  //                         title="Pretty good - 4 stars"
-  //                       ></label>
-  //                       <input
-  //                         type="radio"
-  //                         id="star3half"
-  //                         name="rating"
-  //                         value="3 and a half"
-  //                       />
-  //                       <label
-  //                         className="half"
-  //                         for="star3half"
-  //                         title="Meh - 3.5 stars"
-  //                       ></label>
-  //                       <input type="radio" id="star3" name="rating" value="3" />
-  //                       <label
-  //                         className="half"
-  //                         for="star3half"
-  //                         title="Meh - 3.5 stars"
-  //                       ></label>
-  //                     </fieldset>
-  //                   </div>
-  //                   <p className="sp-profile-rating-date-p-tag">
-  //                     5.0 &nbsp;&nbsp;&nbsp;&nbsp; <Moment date={dateToFormat} />
-  //                   </p>
-  //                 </div>
-  //                 <div className="col-md-12">
-  //                   <p>{key.description}</p>
-  //                 </div>
-  //               </div>
-  //             );
-  //           });
-  //           this.setState({
-  //             result,
-  //             items: result
-  //           });
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.error(error);
-  //       });
-  //   }
-  componentDidMount() {
-    if (cookie.load("Language")) {
-      let langCookie = cookie.load("Language");
-      if (langCookie == "ar") {
-        $("body").css("direction", "rtl");
-        $("body").css("text-align", "right");
-        
-      } else if (langCookie == "en") {
-        $("body").css("direction", "ltr");
-        $("body").css("text-align", "left");
+    //           return (
+    //             <div key={key.id} className="col-md-12 sp-profile-type-name-main">
+    //               <div className="col-md-12 pt-5">
+    //                 <p className="sp-profile-name-type-p-tag text-uppercase">
+    //                   {key.title}
+    //                 </p>
+    //               </div>
+    //               <div className="col-md-12 row">
+    //                 <div className="d-flex justify-content-center pl-3">
+    //                   <fieldset className="rating">
+    //                     <input type="radio" id="star5" name="rating" value="5" />
+    //                     <label
+    //                       className="full"
+    //                       for="star5"
+    //                       title="Awesome - 5 stars"
+    //                     ></label>
+    //                     <input
+    //                       type="radio"
+    //                       id="star4half"
+    //                       name="rating"
+    //                       value="4 and a half"
+    //                     />
+    //                     <label
+    //                       className="half"
+    //                       for="star4half"
+    //                       title="Pretty good - 4.5 stars"
+    //                     ></label>
+    //                     <input type="radio" id="star4" name="rating" value="4" />
+    //                     <label
+    //                       className="full"
+    //                       for="star4"
+    //                       title="Pretty good - 4 stars"
+    //                     ></label>
+    //                     <input
+    //                       type="radio"
+    //                       id="star3half"
+    //                       name="rating"
+    //                       value="3 and a half"
+    //                     />
+    //                     <label
+    //                       className="half"
+    //                       for="star3half"
+    //                       title="Meh - 3.5 stars"
+    //                     ></label>
+    //                     <input type="radio" id="star3" name="rating" value="3" />
+    //                     <label
+    //                       className="half"
+    //                       for="star3half"
+    //                       title="Meh - 3.5 stars"
+    //                     ></label>
+    //                   </fieldset>
+    //                 </div>
+    //                 <p className="sp-profile-rating-date-p-tag">
+    //                   5.0 &nbsp;&nbsp;&nbsp;&nbsp; <Moment date={dateToFormat} />
+    //                 </p>
+    //               </div>
+    //               <div className="col-md-12">
+    //                 <p>{key.description}</p>
+    //               </div>
+    //             </div>
+    //           );
+    //         });
+    //         this.setState({
+    //           result,
+    //           items: result
+    //         });
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    // }
+    componentWillMount() {
+      if (cookie.load("Token")) {
+        let tokenuncoded = cookie.load("Token");
+        let token = decode(cookie.load("Token"));
+        this.setState({ userId: token.ReffID });
+        //  console.log("cockies: "+token.sub)
+        this.setState({
+          token: tokenuncoded
+        });
+        //  console.log("cockies: "+token.sub)
+  
+        fetch(`${baseUrl}api/services/app/User/Get?Id=` + token.sub)
+          .then(res => res.json())
+          .then(json => {
+            if (json.success) {
+              //  console.log(json.result)
+              let user = json.result;
+  
+              this.setState({
+                currentUser: user
+              });
+            }
+          })
+          .catch(error => {
+            // console.error(error);
+          });
       }
-    } else {
-      $("body").css("direction", "rtl");
-        $("body").css("text-align", "right");
     }
-    this.setState({
-      userId: this.props.match.params.spId
-    });
+
+    componentDidMount() {
+      console.log("PROPS",this.props.match.params.spId)
+      if (cookie.load("Language")) { 
+        let langCookie = cookie.load("Language");
+        if (langCookie == "ar") {
+          $("body").css("direction", "rtl");
+          $("body").css("text-align", "right");
+          
+        } else if (langCookie == "en") {
+          $("body").css("direction", "ltr");
+          $("body").css("text-align", "left");
+        }
+      } else {
+        $("body").css("direction", "rtl");
+          $("body").css("text-align", "right");
+      }
+
+
+      fetch(
+        `${baseUrl}api/services/app/Project/GetActiveProjectBySpId?SpId=`+ 
+        this.props.match.params.spId,
+          // this.state.userId,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.state.token
+          }
+        }
+      )
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            console.log("dataaaaaaaaaaaaaaa",json.result);
+  
+            let result = json.result.map(function(key) {
+              // kh code start
+              var d = new Date();
+              var s1 = key.creationTime;
+              var s2 = s1.slice(11, 19);
+              var s3 = s2.slice(0, 2);
+              var diff = d.getTimezoneOffset() / 60;
+              var t = "";
+              var a = parseInt(s3) + parseInt(diff) * -1;
+              if (a < 10) {
+                t = "0" + a;
+              } else {
+                t = a;
+              }
+              var j = s1.slice(0, 11);
+              var k = s1.slice(13, 25);
+              var nT = j + t + k;
+              // kh code end
+              const dateToFormat = new Date(key.creationTime);
+  
+              return (
+                <div key={key.id} className="col-md-12 sp-profile-type-name-main">
+                  <div className="col-md-12 pt-5">
+                    <p className="sp-profile-name-type-p-tag text-uppercase">
+                      {key.title}
+                    </p>
+                  </div>
+                  <div className="col-md-12 row">
+                    <div className="d-flex justify-content-center pl-3">
+                      <fieldset className="rating">
+                        <input type="radio" id="star5" name="rating" value="5" />
+                        <label
+                          className="full"
+                          for="star5"
+                          title="Awesome - 5 stars"
+                        ></label>
+                        <input
+                          type="radio"
+                          id="star4half" 
+                          name="rating"
+                          value="4 and a half"
+                        />
+                        <label
+                          className="half"
+                          for="star4half"
+                          title="Pretty good - 4.5 stars"
+                        ></label>
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label
+                          className="full"
+                          for="star4"
+                          title="Pretty good - 4 stars"
+                        ></label>
+                        <input
+                          type="radio"
+                          id="star3half"
+                          name="rating"
+                          value="3 and a half"
+                        />
+                        <label
+                          className="half"
+                          for="star3half"
+                          title="Meh - 3.5 stars"
+                        ></label>
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label
+                          className="half"
+                          for="star3half"
+                          title="Meh - 3.5 stars"
+                        ></label>
+                      </fieldset>
+                    </div>
+                    <p className="sp-profile-rating-date-p-tag">
+                      5.0 &nbsp;&nbsp;&nbsp;&nbsp; <Moment date={dateToFormat} />
+                    </p>
+                  </div>
+                  <div className="col-md-12">
+                    <p>{key.description}</p>
+                  </div>
+                </div>
+              );
+            });
+            this.setState({
+              result,
+              items: result
+            });
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+  //   }
+  // componentDidMount() {
+    // if (cookie.load("Language")) {
+    //   let langCookie = cookie.load("Language");
+    //   if (langCookie == "ar") {
+    //     $("body").css("direction", "rtl");
+    //     $("body").css("text-align", "right");
+        
+    //   } else if (langCookie == "en") {
+    //     $("body").css("direction", "ltr");
+    //     $("body").css("text-align", "left");
+    //   }
+    // } else {
+    //   $("body").css("direction", "rtl");
+    //     $("body").css("text-align", "right");
+    // }
+    // this.setState({
+    //   userId: this.props.match.params.spId
+    // });
 
     fetch(
       `${baseUrl}api/services/app/User/Get?Id=` + this.props.match.params.spId
@@ -305,7 +460,7 @@ class index extends Component {
           </div>
         </section>
         <section>
-          <div className="container">
+          <div className="container"> 
             <div className="col-md-12">
               <div className="col-md-12 pt-5">
                 <h3>

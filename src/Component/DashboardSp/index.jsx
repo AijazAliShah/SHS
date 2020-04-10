@@ -22,6 +22,7 @@ class index extends Component {
     // this.resultsDiv = React.createRef();
   }
   componentDidMount() {
+    console.log("DASHHHHHH")
     // window.location.reload()
   }
 

@@ -40,6 +40,7 @@ class index extends Component {
       $("body").css("direction", "rtl");
         $("body").css("text-align", "right");
     }
+    console.log("IDDDDDDDDDDDDDDDDDDDD",this.state.userId)
     fetch(
       `${baseUrl}api/services/app/Project/GetActiveProjectBySpId?SpId=` +
         this.state.userId,
@@ -53,7 +54,7 @@ class index extends Component {
       .then(res => res.json())
       .then(json => {
         if (json.success) {
-          console.log(json.result);
+          console.log("dataaaaaaaaaaaaaaa",json.result);
 
           let result = json.result.map(function(key) {
             // kh code start
@@ -93,7 +94,7 @@ class index extends Component {
                       ></label>
                       <input
                         type="radio"
-                        id="star4half"
+                        id="star4half" 
                         name="rating"
                         value="4 and a half"
                       />

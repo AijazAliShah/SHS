@@ -189,6 +189,7 @@ class index extends Component {
     });
   }
   makebid = e => {
+    console.log("IN MAKE BID")
     const {
       bidPrice,
       paymentTerms,
@@ -213,7 +214,10 @@ class index extends Component {
       attachmentFiles.length <= 0 ||
       compleationTime === ""
     ) {
+      console.log("ERRRRRRR")
       if (bidPrice === "") {
+        console.log("ERRRRRR1")
+
         // $(this.refs['fname']).focus();
         this.setState({
           bidPriceLabel: !this.state.bidPriceLabel,
@@ -222,6 +226,8 @@ class index extends Component {
         });
       }
       if (paymentTerms === "") {
+        console.log("ERRRRRRR2")
+
         // $(this.refs['lname']).focus();
 
         this.setState({
@@ -232,6 +238,8 @@ class index extends Component {
       }
 
       if (comments === "") {
+        console.log("ERRRRRRR3")
+
         // $(this.refs['email']).focus();
 
         this.setState({
@@ -241,6 +249,8 @@ class index extends Component {
         });
       }
       if (startDate === "") {
+        console.log("ERRRRRRR4")
+
         // $(this.refs['phone']).focus();
 
         this.setState({
@@ -250,6 +260,8 @@ class index extends Component {
         });
       }
       if (endDate === "") {
+        console.log("ERRRRRRR5")
+
         // $(this.refs['username']).focus();
 
         this.setState({
@@ -271,6 +283,8 @@ class index extends Component {
       }
 
       if (endDate !== "") {
+        console.log("ERRRRRRR6")
+
         let dt1 = new Date(this.state.endDate);
         let year = dt1.getFullYear();
         if (year > 2030) {
@@ -284,6 +298,8 @@ class index extends Component {
       }
 
       if (this.state.attachmentFiles.length <= 0) {
+        console.log("ERRRRRRR7")
+
         // $('.focus-border').attr('className','.focus-border1');
         this.setState({
           attachmentFilesError: !this.state.attachmentFilesError,
@@ -292,6 +308,8 @@ class index extends Component {
         });
       }
     } else {
+      console.log("Corrtet")
+
       this.setState({
         loading: true,
         submitDisabled: true
@@ -335,10 +353,13 @@ class index extends Component {
         })
       })
         .then(function(response) {
+          console.log("RSPPP1",response)
           return response.json(); //response.json() is resolving its promise. It waits for the body to load
         })
         .then(
           responseData => {
+            console.log("RSPPP2",responseData)
+
             if (!responseData.success) {
               //
               this.setState({
@@ -648,7 +669,7 @@ class index extends Component {
                   </div>
                 </div>
               </form>
-            </div>
+            </div> 
           </div>
           {/* </div> */}
         </section>

@@ -18,7 +18,7 @@ class index extends Component {
       scrollTop: 0,
       result: "",
       isDataAvailable: false,
-      activePage: 15,
+      activePage: 15, 
       items: [],
       currentPage: 1,
       itemsPerPage: 6,
@@ -52,6 +52,7 @@ class index extends Component {
     })
       .then(res => res.json())
       .then(json => {
+        console.log("JSONNNNN",json)
         if (json.success) {
           // let parentResult = json.result;
           // let pid = json.result[0].id;

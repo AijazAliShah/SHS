@@ -105,7 +105,7 @@ const routing = (
           />
           <Route path="/givereviews/:projectId/" component={Reviews} />
           <Route
-            path="/bidDetails/:bid_id/:project_title/:project_id"
+            path="/bidDetails/:bid_id/:project_title/:project_id/:key"
             component={BidDetails}
           />
 

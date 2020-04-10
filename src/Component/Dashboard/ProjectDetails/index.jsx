@@ -78,8 +78,9 @@ class index extends Component {
     })
       .then(res => res.json())
       .then(json => {
+        console.log("USer projects", json)
         if (json.success) {
-          // console.log("result", json.result);
+          // console.log("result", json.result); 
           let result = json.result;
           console.log(result);
           let duration_props = this.props.t("duration");
@@ -89,7 +90,7 @@ class index extends Component {
           let rejected_props = this.props.t("rejected");
           let accepte_props = this.props.t("accepted");
           let details_props = this.props.t("details");
-          let projectBids = json.result.projectBids.map(function(key) {
+          let projectBids = json.result.projectBids.map(function(key,ind) {
             // kh code start
             var d = new Date();
             var s1 = key.creationTime;
@@ -113,7 +114,7 @@ class index extends Component {
             let linked = (
               <Link
                 className="make-bid-btnn mt-3"
-                to={`/bidDetails/${key.id}/${result.title}/${id}`}
+                to={`/bidDetails/${key.id}/${result.title}/${id}/${ind}`}
                 style={{
                   paddingTop: "14px",
                   marginTop: " 0px",
