@@ -78,6 +78,7 @@ class index extends Component {
     })
       .then(res => res.json())
       .then(json => {
+        console.log("proecys",json)
         if (json.success) {
           // console.log("result", json.result);
           let result = json.result;

@@ -205,6 +205,8 @@ class index extends Component {
       submitDisabled: true
     });
     // const =this.state.{Fname,Lname,email,password, confirmPassword}
+    console.log("date comp",startDate === endDate)
+
     if (
       bidPrice === "" ||
       paymentTerms === "" ||
@@ -212,7 +214,8 @@ class index extends Component {
       startDate === "" ||
       endDate === "" ||
       attachmentFiles.length <= 0 ||
-      compleationTime === ""
+      compleationTime === "" ||
+      startDate === endDate
     ) {
       console.log("ERRRRRRR")
       if (bidPrice === "") {
@@ -264,11 +267,15 @@ class index extends Component {
 
         // $(this.refs['username']).focus();
 
+       
+      }
+      if(startDate === endDate){
+        
         this.setState({
           endDateLabel: !this.state.endDateLabel,
           loading: false,
           submitDisabled: false,
-          endDateShowError: this.props.t("end_date_req")
+          endDateShowError: this.props.t("Start and End date cannot be same.")
         });
       }
       if (endDate !== "" && startDate !== "") {
@@ -308,6 +315,8 @@ class index extends Component {
         });
       }
     } else {
+
+      console.log("date comp",+this.state.startDate === +this.state.endDate)
       console.log("Corrtet")
 
       this.setState({

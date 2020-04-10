@@ -162,6 +162,7 @@ class index extends Component {
       fetch(`${baseUrl}api/services/app/User/Get?Id=` + token.sub)
         .then(res => res.json())
         .then(json => {
+          console.log("user",json)
           if (json.success) {
             //  console.log(json.result)
             let user = json.result;
