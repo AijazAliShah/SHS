@@ -158,7 +158,7 @@ class index extends Component {
       switch (value) {
         case "catch":
           cookie.remove("Token");
-          window.location.reload();
+          window.location="/";
 
           break;
 
