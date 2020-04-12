@@ -19,7 +19,7 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pref_loc: [
+      pref_loc: [ 
         { pref_location_Type: this.props.t("riyadh"), id: "Riyadh" },
         { pref_location_Type: this.props.t("jeddah"), id: "Jeddah" },
         { pref_location_Type: this.props.t("ad_Dammām"), id: "Ad Dammām" },
@@ -782,7 +782,7 @@ class index extends Component {
                 <div className="alert alert-danger fade show">
                   <h1>
                     {" "}
-                    <strong>Error!</strong>
+                    <strong>Error33!</strong>
                   </h1>
                   <p style={{ fontSize: "30px" }}>
                     {responseData.error.message}
@@ -1047,7 +1047,7 @@ class index extends Component {
       // make API call
       //https://shsbackend.azurewebsites.net/api/services/app/User/IsUserExist?Email=laptop321%40gmail.com&UserName=this
       fetch(
-        `${baseUrl}api/services/app/User/IsUserExist?Email=${email}&UserName=${username}`,
+        `${baseUrl}api/services/app/User/IsUserExist?Email=${email}&UserName=${username}&phoneNumber=${pnumber}`,
         {
           method: "post",
           // mode: 'cors',
@@ -1064,6 +1064,7 @@ class index extends Component {
         })
         .then(
           responseData => {
+            console.log("response",responseData)
             if (responseData.result == "not exist") {
               console.log(responseData.result);
               $(".basicInfo").css("display", "none");

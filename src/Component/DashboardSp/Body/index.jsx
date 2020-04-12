@@ -54,7 +54,7 @@ class index extends Component {
         token: tokenuncoded
       });
       //  console.log("cockies: "+token.sub)
-
+      console.log("token1",token)
       fetch(`${baseUrl}api/services/app/User/Get?Id=` + token.sub)
         .then(res => res.json())
         .then(json => {
@@ -62,12 +62,12 @@ class index extends Component {
           if (json.success) {
             //  console.log(json.result)
             let user = json.result; 
-            console.log("user1",user.id)
+            console.log("user1",user)
             this.setState({
               user: user
             });
 
-            fetch(`${baseUrl}api/services/app/Project/GetMatchingProjectBySpAsync?spID=${user.id}`, {
+            fetch(`${baseUrl}api/services/app/Project/GetMatchingProjectBySpAsync?spID=${token.ReffID}`, {
               headers: {
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + this.state.token
