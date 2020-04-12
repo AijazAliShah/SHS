@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Loader from "./../../loader";
 import TimeAgo from "react-timeago";
+import decode from "jwt-decode";
 import { baseUrl } from "./../../../config.js";
 // import i18n from "./../../../i18n";
 // import '../Projects/node_modules/@trendmicro/react-sidenav/dist/react-sidenav.css';
@@ -22,7 +23,8 @@ class index extends Component {
       items: [],
       currentPage: 1,
       itemsPerPage: 6,
-      token: ""
+      token: "",
+      user: {}
     };
     // this.resultsDiv = React.createRef();
     // this.bignav = this.bignav.bind(this)
@@ -42,214 +44,247 @@ class index extends Component {
       let token = cookie.load("Token");
       this.setState({ token: token });
     }
+
+    if (cookie.load("Token")) {
+      let tokenuncoded = cookie.load("Token");
+      let token = decode(cookie.load("Token"));
+      this.setState({ userId: token.ReffID });
+      //  console.log("cockies: "+token.sub)
+      this.setState({
+        token: tokenuncoded
+      });
+      //  console.log("cockies: "+token.sub)
+
+      fetch(`${baseUrl}api/services/app/User/Get?Id=` + token.sub)
+        .then(res => res.json())
+        .then(json => {
+          console.log("user",json)
+          if (json.success) {
+            //  console.log(json.result)
+            let user = json.result; 
+            console.log("user1",user.id)
+            this.setState({
+              user: user
+            });
+
+            fetch(`${baseUrl}api/services/app/Project/GetMatchingProjectBySpAsync?spID=${user.id}`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + this.state.token
+              }
+            })
+              .then(res => res.json())
+              .then(json => {
+                console.log("JSONNNNN",json)
+                if (json.success) {
+                  // let parentResult = json.result;
+                  // let pid = json.result[0].id;
+                  // console.log('pid: '+ pid)
+                  // console.log(json.result); 
+                
+                  let MorInfo = this.props.t("more_info");
+                  let MakeBid = this.props.t("make_bid");
+        
+                  if (json.result.length === 0) {
+                    this.setState({
+                      isDataAvailable: true
+                    });
+                  }
+                  let result = json.result.map(function(key) {
+                    // kh code start
+                    var d = new Date();
+                    var s1 = key.creationTime;
+                    var s2 = s1.slice(11, 19);
+                    var s3 = s2.slice(0, 2);
+                    var diff = d.getTimezoneOffset() / 60;
+                    var t = "";
+                    var a = parseInt(s3) + parseInt(diff) * -1;
+                    if (a < 10) {
+                      t = "0" + a;
+                    } else {
+                      t = a;
+                    }
+                    var j = s1.slice(0, 11);
+                    var k = s1.slice(13, 25);
+                    var nT = j + t + k;
+                    // kh code end
+        
+                    return (
+                      // <section  className=''>
+                      // <div className="container body-container mt-5 d-flex justify-content-center">
+                      //    <div className=" row col-md-12 " style={{marginBottom: '30px'}}>
+                      // <div key= {key.id}  className="col-md-4" style={{marginBottom: '30px'}}>
+                      // <div  className="col-md-4" style={{marginBottom: '30px'}}>
+                      <div
+                        key={key.id}
+                        className="card "
+                        style={{
+                          width: "250px",
+                          minHeight: "175px",
+                          boxShadow: "0px 8px 8px 5px lightgrey"
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "inline-block",
+                            paddingTop: "8px",
+                            paddingRight: "20px",
+                            paddingLeft: "20px"
+                          }}
+                        >
+                          <div>
+                            <span
+                              className="icon"
+                              style={{
+                                color: "#2699fb",
+                                float: "left",
+                                fontSize: "14px"
+                              }}
+                            >
+                              <i className="fa fa-eye" />
+                            </span>
+        
+                            {/* <span
+                              className="icon"
+                              style={{
+                                color: "#2699fb",
+                                float: "right",
+                                fontSize: "14px"
+                              }}
+                            >
+                              <i className="fa fa-share-alt" />
+                            </span> */}
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            display: "inline-block",
+                            paddingRight: "10px",
+                            paddingLeft: "20px",
+                            top: 0
+                          }}
+                        >
+                          <div>
+                            <span
+                              className="icon"
+                              style={{ float: "left", color: "#000", fontSize: "14px" }}
+                            >
+                              {key.views}
+                            </span>
+        
+                            {/* <span
+                              className="icon"
+                              style={{
+                                float: "right",
+                                color: "#000",
+                                fontSize: "14px"
+                              }}
+                            >
+                              Share
+                            </span> */}
+                          </div>
+                        </div>
+        
+                        <div
+                          className="card-body"
+                          style={{ top: "-25px", marginTop: "-18px" }}
+                        >
+                          <p
+                            className="card-title"
+                            style={{
+                              color: "#2699fb",
+                              fontSize: "14px",
+                              marginBottom: "3px"
+                            }}
+                          >
+                            <b>{key.title}</b>
+                          </p>
+        
+                          <p
+                            className="card-text"
+                            style={{
+                              marginRight: "10px",
+                              color: "#000",
+                              fontSize: "14px"
+                            }}
+                          >
+                            {/* JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for ... */}
+        
+                            {key.description
+                              ? key.description.slice(0, 100) +
+                                (key.description.length > 50 ? "..." : "")
+                              : null}
+                            {/*  console.log(key.description)
+                                fn(key.description, 10);"/bidding"
+                              } */}
+                          </p>
+                          {/* Button */}
+                          <Link
+                            to={`/project_details/${key.id}`}
+                            className="btn btn-primary btn-sm"
+                            style={{
+                              borderRadius: "30px",
+        
+                              bottom: "27px",
+                              fontSize: "14px"
+                            }}
+                          >
+                            {MorInfo}
+                          </Link>
+        
+                          <Link
+                            to={`/makebid/${key.id}`}
+                            className="btn btn-primary btn-sm"
+                            style={{
+                              borderRadius: "30px",
+                              float: "right",
+                              bottom: "27px",
+                              right: "18px",
+                              fontSize: "14px"
+                            }}
+                          >
+                            {MakeBid}
+                          </Link>
+                        </div>
+                        <div
+                          style={{
+                            height: "30px",
+                            width: "100%",
+                            backgroundColor: "#2699fb",
+                            color: "#fff",
+                            paddingLeft: "12px"
+                          }}
+                        >
+                          <small>
+                            {/* 3 sec ago */}
+                            <TimeAgo date={nT} />
+                          </small>
+                        </div>
+                      </div>
+                    );
+                  });
+        
+                  this.setState({
+                    result,
+                    items: result
+                  });
+                }
+              })
+              .catch(error => {
+                console.error(error);
+              });
+
+
+          }
+        })
+        .catch(error => {
+          // console.error(error);
+        });
+      }
   }
   componentDidMount() {
-    fetch(`${baseUrl}api/services/app/Project/GetApprovedProjects`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + this.state.token
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        console.log("JSONNNNN",json)
-        if (json.success) {
-          // let parentResult = json.result;
-          // let pid = json.result[0].id;
-          // console.log('pid: '+ pid)
-          // console.log(json.result);
-        
-          let MorInfo = this.props.t("more_info");
-          let MakeBid = this.props.t("make_bid");
-
-          if (json.result.length === 0) {
-            this.setState({
-              isDataAvailable: true
-            });
-          }
-          let result = json.result.map(function(key) {
-            // kh code start
-            var d = new Date();
-            var s1 = key.creationTime;
-            var s2 = s1.slice(11, 19);
-            var s3 = s2.slice(0, 2);
-            var diff = d.getTimezoneOffset() / 60;
-            var t = "";
-            var a = parseInt(s3) + parseInt(diff) * -1;
-            if (a < 10) {
-              t = "0" + a;
-            } else {
-              t = a;
-            }
-            var j = s1.slice(0, 11);
-            var k = s1.slice(13, 25);
-            var nT = j + t + k;
-            // kh code end
-
-            return (
-              // <section  className=''>
-              // <div className="container body-container mt-5 d-flex justify-content-center">
-              //    <div className=" row col-md-12 " style={{marginBottom: '30px'}}>
-              // <div key= {key.id}  className="col-md-4" style={{marginBottom: '30px'}}>
-              // <div  className="col-md-4" style={{marginBottom: '30px'}}>
-              <div
-                key={key.id}
-                className="card "
-                style={{
-                  width: "250px",
-                  minHeight: "175px",
-                  boxShadow: "0px 8px 8px 5px lightgrey"
-                }}
-              >
-                <div
-                  style={{
-                    display: "inline-block",
-                    paddingTop: "8px",
-                    paddingRight: "20px",
-                    paddingLeft: "20px"
-                  }}
-                >
-                  <div>
-                    <span
-                      className="icon"
-                      style={{
-                        color: "#2699fb",
-                        float: "left",
-                        fontSize: "14px"
-                      }}
-                    >
-                      <i className="fa fa-eye" />
-                    </span>
-
-                    {/* <span
-                      className="icon"
-                      style={{
-                        color: "#2699fb",
-                        float: "right",
-                        fontSize: "14px"
-                      }}
-                    >
-                      <i className="fa fa-share-alt" />
-                    </span> */}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    paddingRight: "10px",
-                    paddingLeft: "20px",
-                    top: 0
-                  }}
-                >
-                  <div>
-                    <span
-                      className="icon"
-                      style={{ float: "left", color: "#000", fontSize: "14px" }}
-                    >
-                      {key.views}
-                    </span>
-
-                    {/* <span
-                      className="icon"
-                      style={{
-                        float: "right",
-                        color: "#000",
-                        fontSize: "14px"
-                      }}
-                    >
-                      Share
-                    </span> */}
-                  </div>
-                </div>
-
-                <div
-                  className="card-body"
-                  style={{ top: "-25px", marginTop: "-18px" }}
-                >
-                  <p
-                    className="card-title"
-                    style={{
-                      color: "#2699fb",
-                      fontSize: "14px",
-                      marginBottom: "3px"
-                    }}
-                  >
-                    <b>{key.title}</b>
-                  </p>
-
-                  <p
-                    className="card-text"
-                    style={{
-                      marginRight: "10px",
-                      color: "#000",
-                      fontSize: "14px"
-                    }}
-                  >
-                    {/* JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for ... */}
-
-                    {key.description
-                      ? key.description.slice(0, 100) +
-                        (key.description.length > 50 ? "..." : "")
-                      : null}
-                    {/*  console.log(key.description)
-                        fn(key.description, 10);"/bidding"
-                      } */}
-                  </p>
-                  {/* Button */}
-                  <Link
-                    to={`/project_details/${key.id}`}
-                    className="btn btn-primary btn-sm"
-                    style={{
-                      borderRadius: "30px",
-
-                      bottom: "27px",
-                      fontSize: "14px"
-                    }}
-                  >
-                    {MorInfo}
-                  </Link>
-
-                  <Link
-                    to={`/makebid/${key.id}`}
-                    className="btn btn-primary btn-sm"
-                    style={{
-                      borderRadius: "30px",
-                      float: "right",
-                      bottom: "27px",
-                      right: "18px",
-                      fontSize: "14px"
-                    }}
-                  >
-                    {MakeBid}
-                  </Link>
-                </div>
-                <div
-                  style={{
-                    height: "30px",
-                    width: "100%",
-                    backgroundColor: "#2699fb",
-                    color: "#fff",
-                    paddingLeft: "12px"
-                  }}
-                >
-                  <small>
-                    {/* 3 sec ago */}
-                    <TimeAgo date={nT} />
-                  </small>
-                </div>
-              </div>
-            );
-          });
-
-          this.setState({
-            result,
-            items: result
-          });
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    // fetch(`${baseUrl}api/services/app/Project/GetApprovedProjects`, {
+   
   }
   render() {
     const { items, currentPage, itemsPerPage, isDataAvailable } = this.state;

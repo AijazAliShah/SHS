@@ -165,7 +165,7 @@ class index extends Component {
           console.log("user",json)
           if (json.success) {
             //  console.log(json.result)
-            let user = json.result;
+            let user = json.result; 
 
             this.setState({
               currentUser: user

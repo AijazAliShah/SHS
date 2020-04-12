@@ -18,7 +18,7 @@ class index extends Component {
     // this.bignav = this.bignav.bind(this)
     // this.mynav = this.mynav.bind(this)
     // this.logout = this.logout.bind(this)
-
+ 
     // this.resultsDiv = React.createRef();
   }
   componentDidMount() {
