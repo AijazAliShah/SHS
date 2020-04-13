@@ -419,7 +419,7 @@ class index extends Component {
                       </div>
                       <div class="col-md-3 col-sm-3 col-6 duration-tym">
                         <p class="duration-tym-p">
-                          {moment(this.state.result.startDate).format(
+                          {moment(this.state.result.endDate).format(
                             "DD-MM-YYYY "
                           )}
                           {/* <Moment fromNow>
