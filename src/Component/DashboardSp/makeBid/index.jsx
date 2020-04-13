@@ -267,7 +267,7 @@ class index extends Component {
 
         // $(this.refs['username']).focus();
 
-       
+        
       }
       if(startDate === endDate){
         

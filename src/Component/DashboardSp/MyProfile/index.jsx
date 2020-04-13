@@ -159,6 +159,7 @@ class index extends Component {
       });
       //  console.log("cockies: "+token.sub)
 
+      console.log("clg")
       fetch(`${baseUrl}api/services/app/User/Get?Id=` + token.sub)
         .then(res => res.json())
         .then(json => {

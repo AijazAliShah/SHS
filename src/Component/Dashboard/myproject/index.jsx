@@ -91,7 +91,8 @@ class index extends Component {
       projectTechnicalInfo: false,
       noChild: false,
       attachmentFiles: [],
-      token: ""
+      token: "",
+      error1: ''
     };
     // this.resultsDiv = React.createRef();
     this.startDateHandle = this.startDateHandle.bind(this);
@@ -266,7 +267,7 @@ class index extends Component {
       this.setState({
         endDateError: !this.state.endDateError,
         loading: false,
-        endDateShowError: "End date  required",
+        endDateShowError: "End date required",
         submitDisabled: false
       });
     }  else if (this.state.startDate > this.state.endDate) {
@@ -286,7 +287,17 @@ class index extends Component {
         submitDisabled: false,
         endDateShowError: "End date must be greater than or equal start date"
       });
-    } else if (this.state.description === "") {
+    }else if(this.state.startDate === this.state.endDate){
+        
+      this.setState({
+        endDateLabel: !this.state.endDateLabel,
+        loading: false,
+        submitDisabled: false,
+        error1: "Start and End date cannot be same.",
+        endDateShowError: this.props.t("Start and End date cannot be same.")
+      });
+    }
+    else if (this.state.description === "") {
       $(this.refs["description"]).focus();
       // $(this.refs['des-border']).css(
       //   {border: 0,
@@ -1724,6 +1735,8 @@ class index extends Component {
                       </div>
                     </div>
                   </div>
+                  <p style={{textAlign: "center", color: "red", marginTop: 10}}>{this.state.error1}</p>
+
                   <div className="col-md-12 ">
                     <div className="container row">
                       <div className="col-md-12 input-effect mt-5">
